@@ -1,8 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val kotlinVersion = "1.9.22"
+
 plugins {
     kotlin("jvm") version "1.9.22"
     application
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = "org.smdc.quickchatroom"
@@ -14,8 +17,10 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     implementation("org.tinylog:tinylog-api:2.6.1")
     implementation("org.tinylog:tinylog-impl:2.6.1")
+    implementation("com.alibaba:fastjson:2.0.32")
 }
 
 tasks.test {
@@ -24,6 +29,11 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
+}
+
+tasks.withType<JavaCompile> {
+    sourceCompatibility = "11"
+    targetCompatibility = "11"
 }
 
 application {
@@ -43,4 +53,7 @@ tasks.jar {
 
     dependsOn(configurations.runtimeClasspath)
     from({ configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) } })
+}
+
+tasks.dokkaHtml {
 }

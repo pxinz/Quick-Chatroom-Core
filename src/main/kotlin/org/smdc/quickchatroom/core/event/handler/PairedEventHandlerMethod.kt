@@ -19,9 +19,9 @@ open class PairedEventHandlerMethod(method: Method, handler: EventHandler?) {
         @Suppress("UNCHECKED_CAST")
         fun safeGetHandlerMethodType(method: Method): Class<out Event>? {
             val types = method.parameterTypes
-            if (!method.isAnnotationPresent(EventHandlerMethod::class.java) ||
-                types.isEmpty() ||
-                !Event::class.java.isAssignableFrom(types[0])
+            if (!method.isAnnotationPresent(EventHandlerMethod::class.java) || types.isEmpty() || !Event::class.java.isAssignableFrom(
+                    types[0]
+                )
             ) return null
             return types[0] as Class<out Event>
         }
@@ -82,18 +82,19 @@ open class PairedEventHandlerMethod(method: Method, handler: EventHandler?) {
 
     init {
         this.method = method
-        this.handler = handler
-
+        if (Modifier.isStatic(method.modifiers)) {
+            this.handler = null
+        } else if (handler == null) {
+            throw IllegalArgumentException("无执行者不可使用于非静态方法")
+        } else {
+            this.handler = handler
+        }
 
         val type = safeGetHandlerMethodType(method)
         if (type == null) {
             throw IllegalArgumentException("传入的method不是事件处理方法")
         } else {
             this.type = type
-        }
-
-        if (handler == null && !Modifier.isStatic(method.modifiers)){
-            throw IllegalArgumentException("无执行者不可使用于非静态方法")
         }
     }
 

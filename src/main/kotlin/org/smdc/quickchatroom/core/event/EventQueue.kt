@@ -13,27 +13,40 @@ open class EventQueue : LinkedList<Event>() {
      */
     open val handleMethodsMap = EventHandleMethodsMap()
 
-    private var onAdd: ((Event) -> Any)? = null
+    /**
+     * 添加事件时执行的方法
+     */
+    protected open var onAdd: ((Event) -> Any)? = null
 
-    @Throws(InvocationTargetException::class, IllegalAccessException::class)
-    fun handle(event: Event) {
-        handleMethodsMap[event.javaClass]?.forEach { method ->
-            if (!event.done) {
-                method.invoke(event)
-            }
-        }
-    }
-
+    /**
+     * 处理队列中最前的事件
+     * @exception InvocationTargetException 执行方法中可能出现的错误
+     * @exception IllegalAccessException 执行方法中可能出现的错误
+     *
+     * @see EventHandleMethodsMap.handle
+     */
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
     fun handleOne() {
-        handle(pop())
+        handleMethodsMap.handle(pop())
     }
 
+    /**
+     * 处理队列中所有事件
+     * @exception InvocationTargetException 执行方法中可能出现的错误
+     * @exception IllegalAccessException 执行方法中可能出现的错误
+     *
+     * @return 本次处理的事件数
+     *
+     * @see EventHandleMethodsMap.handle
+     */
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
-    fun handleAll() {
+    fun handleAll(): Int {
+        var count = 0
         while (isNotEmpty()) {
             handleOne()
+            count++
         }
+        return count
     }
 
     override fun add(element: Event): Boolean {
@@ -46,6 +59,9 @@ open class EventQueue : LinkedList<Event>() {
         return super.add(element)
     }
 
+    /**
+     * 设置添加事件时执行的方法
+     */
     fun setOnAdd(onAdd: ((Event) -> Any)?) {
         this.onAdd = onAdd
     }

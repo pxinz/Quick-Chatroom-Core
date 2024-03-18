@@ -3,7 +3,9 @@ package org.smdc.quickchatroom.core.socket
 import java.io.InputStream
 import java.io.OutputStream
 
-
+/**
+ * LEB128编码的Int版本
+ */
 object VarInt {
     /**
      * 0b01111111，作按位与后可取出VarInt单字节的内容

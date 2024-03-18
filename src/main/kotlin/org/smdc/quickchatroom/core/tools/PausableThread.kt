@@ -2,6 +2,9 @@ package org.smdc.quickchatroom.core.tools
 
 import kotlin.concurrent.Volatile
 
+/**
+ * 可暂停的线程(暂停在循环方法loopItem执行完毕后)
+ */
 abstract class PausableThread : Thread() {
     /**
      * 用于暂停和恢复线程的对象锁
@@ -14,10 +17,19 @@ abstract class PausableThread : Thread() {
     @Volatile
     protected open var paused = false
 
+    /**
+     * 在循环前执行的方法
+     */
     protected open fun beforeLoop() {}
 
+    /**
+     * 在循环中执行的方法
+     */
     protected abstract fun loopItem()
 
+    /**
+     * 在循环后执行的方法
+     */
     protected open fun afterLoop() {}
 
     /**
@@ -62,6 +74,11 @@ abstract class PausableThread : Thread() {
         afterLoop()
     }
 
+    /**
+     * 获取是否被暂停
+     *
+     * @return 是否被暂停
+     */
     open fun isPaused(): Boolean {
         return paused
     }

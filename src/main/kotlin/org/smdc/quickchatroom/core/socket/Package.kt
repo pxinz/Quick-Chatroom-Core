@@ -1,7 +1,7 @@
 package org.smdc.quickchatroom.core.socket
 
 import com.alibaba.fastjson.JSONObject
-import org.smdc.quickchatroom.core.tools.printJSON
+import org.smdc.quickchatroom.core.tools.JSONPrinter
 
 /**
  * 通讯时所需的数据包
@@ -29,7 +29,7 @@ data class Package(val route: String, val rId: Int?, val data: JSONObject) {
      */
     fun printPackage() {
         println("PACK: ROUTE %s%n".format(route))
-        printJSON(data)
+        JSONPrinter.printJSON(data)
     }
 
     /**

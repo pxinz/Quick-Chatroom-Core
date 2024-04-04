@@ -27,7 +27,7 @@ ________    ________    ________    _______
     \|_______|  \|_______|  \|__|\|__|  \|_______|
 """ + "\u001b[0m"
 
-val dependencies = arrayOf("org.tinylog.Logger", "com.alibaba.fastjson.JSONObject")
+val dependencies = arrayOf("org.tinylog.Logger", "com.alibaba.fastjson2.JSONObject")
 
 fun testForDependency(className: String): Boolean {
     try {

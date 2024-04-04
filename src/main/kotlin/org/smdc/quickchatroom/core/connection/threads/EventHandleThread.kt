@@ -1,11 +1,11 @@
-package org.smdc.quickchatroom.core.client.threads
+package org.smdc.quickchatroom.core.connection.threads
 
 import org.smdc.quickchatroom.core.event.EventQueue
 import org.smdc.quickchatroom.core.tools.PausableThread
 
 open class EventHandleThread(protected open val queue: EventQueue) : PausableThread() {
     override fun beforeLoop() {
-        queue.setOnAdd { resumeT() }
+        queue.setFuncOnAdd { resumeT() }
     }
 
     override fun loopItem() {
@@ -14,6 +14,6 @@ open class EventHandleThread(protected open val queue: EventQueue) : PausableThr
     }
 
     override fun afterLoop() {
-        queue.setOnAdd(null)
+        queue.setFuncOnAdd(null)
     }
 }

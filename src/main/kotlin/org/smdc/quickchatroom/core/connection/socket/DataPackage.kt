@@ -1,14 +1,14 @@
-package org.smdc.quickchatroom.core.socket
+package org.smdc.quickchatroom.core.connection.socket
 
-import com.alibaba.fastjson.JSONObject
+import com.alibaba.fastjson2.JSONObject
 import org.smdc.quickchatroom.core.tools.JSONPrinter
 
 /**
  * 通讯时所需的数据包
  */
-data class Package(val route: String, val rId: Int?, val data: JSONObject) {
+data class DataPackage(val route: String, val rId: Int, val data: JSONObject) {
     companion object {
-        var globalRId = 0
+        private var globalRId = 0
     }
 
     /**
@@ -39,9 +39,7 @@ data class Package(val route: String, val rId: Int?, val data: JSONObject) {
     override fun toString(): String {
         val obj = JSONObject()
         obj["route"] = route
-        if (rId != null) {
-            obj["rId"] = rId
-        }
+        obj["rId"] = rId
         obj["data"] = data
         return obj.toJSONString()
     }

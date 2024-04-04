@@ -1,28 +1,45 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val kotlinVersion = "1.9.22"
+// 基础信息
+group = "org.smdc.quickchatroom"
+archivesName = "core"
+version = "alpha0.01"
 
+// 插件
 plugins {
+    // Kotlin
     kotlin("jvm") version "1.9.22"
+    // Run
     application
-    id("org.jetbrains.dokka") version "1.9.20"
+    // Doc
+    id("org.jetbrains.dokka") version "latest.release"
+    // Publish
     id("maven-publish")
 }
 
-group = "org.smdc.quickchatroom"
-version = "alpha0.01"
-
+// 仓库
 repositories {
+    // Maven中心库
     mavenCentral()
+//    // Quick-Chatroom-Core
+//    maven {
+//        name = "GitHubPackages"
+//        url = uri("https://maven.pkg.github.com/pxinz/Quick-Chatroom-Core")
+//        credentials {
+//            username = properties["publish.github.GITHUB_ACTOR"] as String
+//            password = properties["publish.github.GITHUB_TOKEN"] as String
+//        }
+//    }
 }
 
+// 依赖项
 dependencies {
-    testImplementation(kotlin("test"))
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    implementation("org.tinylog:tinylog-api:2.6.1")
-    implementation("org.tinylog:tinylog-impl:2.6.1")
-    implementation("com.alibaba:fastjson:2.0.32")
-//    implementation("io.github.org.pxinz.")
+    // TinyLog 日志记录库
+    implementation("org.tinylog:tinylog-api:latest.release")
+    implementation("org.tinylog:tinylog-impl:latest.release")
+    // FastJson2 json解析库
+    implementation("com.alibaba.fastjson2:fastjson2:latest.release")
 }
 
 tasks.test {
@@ -46,16 +63,18 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/org.smdc.quickchatroom/core")
-            credentials{
+            url = uri("https://maven.pkg.github.com/pxinz/Quick-Chatroom-Core")
+            credentials {
                 username = properties["publish.github.GITHUB_ACTOR"] as String
                 password = properties["publish.github.GITHUB_TOKEN"] as String
             }
         }
     }
 
-    publications{
-        create<MavenPublication>("main"){
+    publications {
+        create<MavenPublication>("main") {
+            groupId = "org.smdc.quickchatroom"
+            artifactId = "core"
             from(components["java"])
         }
     }

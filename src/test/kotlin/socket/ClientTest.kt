@@ -1,7 +1,7 @@
 package org.smdc.quickchatroom.core.test.socket
 
-import org.smdc.quickchatroom.core.socket.receiveData
-import org.smdc.quickchatroom.core.socket.sendData
+import org.smdc.quickchatroom.core.connection.socket.receiveData
+import org.smdc.quickchatroom.core.connection.socket.sendData
 import java.net.Socket
 import java.util.Scanner
 

@@ -1,6 +1,6 @@
-package org.smdc.quickchatroom.core.socket
+package org.smdc.quickchatroom.core.connection.socket
 
-import com.alibaba.fastjson.JSONObject
+import com.alibaba.fastjson2.JSON
 import java.net.Socket
 
 /**
@@ -9,7 +9,6 @@ import java.net.Socket
  * @see VarInt.writeVarInt
  */
 fun Socket.sendData(data: ByteArray) {
-    VarInt.writeVarInt(data.size, outputStream)
     outputStream.write(data)
 }
 
@@ -42,8 +41,8 @@ fun Socket.receiveData(): ByteArray {
 /**
  * 接收带有VarInt头的数据包类型数据
  *
- * @see Package
+ * @see DataPackage
  */
-fun Socket.receivePackage(): Package {
-    return Package(JSONObject.parse(receiveData()) as JSONObject)
+fun Socket.receivePackage(): DataPackage {
+    return DataPackage(JSON.parseObject(receiveData()))
 }

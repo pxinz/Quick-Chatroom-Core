@@ -39,8 +39,8 @@
 
 ## 依赖项
 
-| 依赖项                                               | 用途     | 计划                                                      |
-|---------------------------------------------------|--------|---------------------------------------------------------|
-| [TinyLog](https://github.com/tinylog-org/tinylog) | 打印日志   |                                                         |
-| [fastjson](https://github.com/alibaba/fastjson)   | JSON读写 | 使用 [fastjson2](https://github.com/alibaba/fastjson2) 替换 |
+| 依赖项                                               | 用途     | 计划 |
+|---------------------------------------------------|--------|----|
+| [TinyLog](https://github.com/tinylog-org/tinylog) | 打印日志   |    |
+| [fastjson2](https://github.com/alibaba/fastjson2) | JSON读写 |    |
 

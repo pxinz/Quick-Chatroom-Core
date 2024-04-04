@@ -1,4 +1,4 @@
-package org.smdc.quickchatroom.core.socket
+package org.smdc.quickchatroom.core.connection.socket
 
 import java.io.InputStream
 import java.io.OutputStream

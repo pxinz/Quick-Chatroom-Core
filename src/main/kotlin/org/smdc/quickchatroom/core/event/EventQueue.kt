@@ -62,7 +62,7 @@ open class EventQueue : LinkedList<Event>() {
     /**
      * 设置添加事件时执行的方法
      */
-    fun setOnAdd(onAdd: ((Event) -> Any)?) {
+    fun setFuncOnAdd(onAdd: ((Event) -> Any)?) {
         this.onAdd = onAdd
     }
 }
